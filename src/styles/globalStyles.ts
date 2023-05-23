@@ -6,6 +6,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: Open-Sans, Helvetica, Sans-Serif;
   }
+
+  h1, p, a, span {
+    margin: 0;
+  }
 `;
 
 export default GlobalStyle;

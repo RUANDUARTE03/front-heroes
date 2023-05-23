@@ -1,20 +1,16 @@
 import GlobalStyle from "./styles/globalStyles";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Routers from "./routers";
+import { Footer, Header } from "./components";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <div>ZRP</div>,
-  },
-]);
-
-function App() {
+const App = () => {
   return (
     <>
+      <Header />
       <GlobalStyle />
-      <RouterProvider router={router} />
+      <Routers />
+      <Footer />
     </>
   );
-}
+};
 
 export default App;
