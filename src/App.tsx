@@ -1,6 +1,6 @@
 import GlobalStyle from "./styles/globalStyles";
 import Routers from "./routers";
-import { Header } from "./components/Header";
+import { Footer, Header } from "./components";
 
 const App = () => {
   return (
@@ -8,6 +8,7 @@ const App = () => {
       <Header />
       <GlobalStyle />
       <Routers />
+      <Footer />
     </>
   );
 };
