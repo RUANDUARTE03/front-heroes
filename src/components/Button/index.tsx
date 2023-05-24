@@ -5,11 +5,17 @@ type ButtonProps = {
   children: ReactNode;
   onClick: () => void;
   version?: "v1" | "v2";
+  width?: string;
 };
 
-const Button = ({ children, onClick, version = "v1" }: ButtonProps) => {
+const Button = ({
+  children,
+  onClick,
+  version = "v1",
+  width = "60%",
+}: ButtonProps) => {
   return (
-    <S.ContainerButton onClick={onClick} version={version}>
+    <S.ContainerButton width={width} onClick={onClick} version={version}>
       {children}
     </S.ContainerButton>
   );

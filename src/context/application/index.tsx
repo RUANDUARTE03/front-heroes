@@ -22,11 +22,25 @@ export const ApplicationContext =
 export function ApplicationProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState("");
 
+  useEffect(() => {
+    const getToken = localStorage.getItem("@zrp/token");
+
+    if (getToken) {
+      setToken(getToken);
+    }
+  }, []);
+
+  const handleToken = (value: string) => {
+    setToken(value);
+
+    localStorage.setItem("@zrp/token", value);
+  };
+
   return (
     <ApplicationContext.Provider
       value={{
         token,
-        setToken,
+        setToken: handleToken,
       }}
     >
       {children}

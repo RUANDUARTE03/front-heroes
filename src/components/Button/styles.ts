@@ -3,6 +3,7 @@ import { light, primary, secondary } from "src/styles/variables";
 
 type ContainerButtonProps = {
   version: "v1" | "v2";
+  width: string;
 };
 
 export const ContainerButton = styled.div<ContainerButtonProps>`
@@ -15,7 +16,7 @@ export const ContainerButton = styled.div<ContainerButtonProps>`
   height: 40px;
   justify-content: center;
   margin: 12px 0 20px;
-  width: 60%;
+  width: ${(props) => props.width};
 
   & p {
     color: ${primary};

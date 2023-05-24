@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styles";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components";
+import { useApplicationContext } from "../../context/application";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { token } = useApplicationContext();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   return (
     <S.ContainerRegister>
