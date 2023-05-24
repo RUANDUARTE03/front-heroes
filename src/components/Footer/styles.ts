@@ -7,4 +7,5 @@ export const ContainerFooter = styled.div`
   display: flex;
   position: fixed;
   width: 100%;
+  padding: 12px 5%
 `;
