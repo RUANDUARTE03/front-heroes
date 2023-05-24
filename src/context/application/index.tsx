@@ -9,11 +9,15 @@ import React, {
 type ContextDefaultValuesProps = {
   token: string;
   setToken: (value: string) => void;
+  messageAlert: string;
+  setMessageAlert: (value: string) => void;
 };
 
 const contextDefaultValues: ContextDefaultValuesProps = {
   token: "",
   setToken: () => null,
+  messageAlert: "",
+  setMessageAlert: () => null,
 };
 
 export const ApplicationContext =
@@ -21,6 +25,7 @@ export const ApplicationContext =
 
 export function ApplicationProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState("");
+  const [messageAlert, setMessageAlert] = useState("");
 
   useEffect(() => {
     const getToken = localStorage.getItem("@zrp/token");
@@ -29,6 +34,12 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
       setToken(getToken);
     }
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessageAlert('');
+    }, 3000);
+  }, [messageAlert]);
 
   const handleToken = (value: string) => {
     setToken(value);
@@ -41,6 +52,8 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
       value={{
         token,
         setToken: handleToken,
+        messageAlert,
+        setMessageAlert,
       }}
     >
       {children}

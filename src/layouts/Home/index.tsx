@@ -3,6 +3,7 @@ import * as S from "./styles";
 import { HeroesService } from "../../services/heroes";
 import { useApplicationContext } from "../../context/application";
 import { Button } from "src/components";
+import { useNavigate } from "react-router-dom";
 
 type HeroesProps = {
   _id: string;
@@ -12,8 +13,9 @@ type HeroesProps = {
 };
 
 const Home = () => {
+  const navigate = useNavigate();
   const [listHeroes, setListHeroes] = useState<HeroesProps[]>();
-  const { token } = useApplicationContext();
+  const { token, messageAlert } = useApplicationContext();
 
   useEffect(() => {
     const getAllHeroes = async () => {
@@ -25,10 +27,15 @@ const Home = () => {
     getAllHeroes();
   }, []);
 
+  const redirectCreateHeroe = () => {
+    navigate("/create/heroe");
+  };
+
   return (
     <S.ContainerHome>
+      <S.MessageAlert>{messageAlert}</S.MessageAlert>
       <S.ContainerActions>
-        <Button width="120px" onClick={() => null}>
+        <Button width="120px" onClick={redirectCreateHeroe}>
           <p>Adicionar</p>
         </Button>
       </S.ContainerActions>
@@ -47,7 +54,14 @@ const Home = () => {
                   <span>Tipo</span>: {heroe.typeHeroe}
                 </p>
               </S.InfomationsHeroe>
-              <S.ActionsHeroe></S.ActionsHeroe>
+              <S.ActionsHeroe>
+                <Button
+                  onClick={() => navigate(`/edit/heroe/${heroe._id}`)}
+                  version="v2"
+                >
+                  <p>Visualizar</p>
+                </Button>
+              </S.ActionsHeroe>
             </S.ItemHeroe>
           );
         })}

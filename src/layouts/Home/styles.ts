@@ -5,6 +5,11 @@ export const ContainerHome = styled.div`
   padding: 40px 60px;
 `;
 
+export const MessageAlert = styled.p`
+  color: ${secondary};
+  text-align: center;
+`;
+
 export const ContainerActions = styled.div`
   width: 100%;
   display: flex;
@@ -20,12 +25,12 @@ export const BodyItemsHeroes = styled.div`
 
 export const ItemHeroe = styled.div`
   border: 1px solid ${secondary};
-  margin: 0 20px;
+  margin: 0 20px 20px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 12px 28px;
+  padding: 12px 28px 0;
 `;
 
 export const InfomationsHeroe = styled.div`
@@ -41,4 +46,8 @@ export const InfomationsHeroe = styled.div`
   }
 `;
 
-export const ActionsHeroe = styled.div``;
+export const ActionsHeroe = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
