@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import * as S from "./styles";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../components";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <S.ContainerLogin>
       <S.ContainerModalLogin>
-        <S.Title>Login Heroes</S.Title>
+        <S.Title>Login</S.Title>
         <S.BodyForm>
           <S.InputInformation
             value={email}
@@ -21,11 +25,18 @@ const Login = () => {
             placeholder="Senha"
           />
         </S.BodyForm>
-        <S.BtnLogin>
+        <Button onClick={() => null}>
           <p>Login</p>
-        </S.BtnLogin>
+        </Button>
         <S.InformationRegister>
-          Ainda não tem cadastro? <span>Registre-se</span>
+          Ainda não tem cadastro?{" "}
+          <span
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            Registre-se
+          </span>
         </S.InformationRegister>
       </S.ContainerModalLogin>
     </S.ContainerLogin>

@@ -1,14 +1,14 @@
-import { light, primary, secondary } from "src/styles/variables";
 import styled from "styled-components";
+import { light, primary, secondary } from "src/styles/variables";
 
-export const ContainerLogin = styled.div`
+export const ContainerRegister = styled.div`
   align-items: center;
   display: flex;
   height: calc(100vh - 100px - 42px);
   justify-content: center;
 `;
 
-export const ContainerModalLogin = styled.div`
+export const ContainerModalRegister = styled.div`
   align-items: center;
   background-color: ${primary};
   border-radius: 8px;
@@ -43,16 +43,5 @@ export const InputInformation = styled.input`
 
   ::placeholder {
     padding-left: 8px;
-  }
-`;
-
-export const InformationRegister = styled.p`
-  color: ${light};
-  font-size: 14px;
-  font-weight: 600;
-
-  & span {
-    color: ${secondary};
-    cursor: pointer;
   }
 `;
