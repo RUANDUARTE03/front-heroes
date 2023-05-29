@@ -45,8 +45,6 @@ const Login = () => {
     }
   };
 
-  console.log(typeMessage);
-
   return (
     <S.ContainerLogin>
       {typeMessage === "success" && (

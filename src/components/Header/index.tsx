@@ -14,12 +14,12 @@ const Header = () => {
         <text
           x="50%"
           y="60%"
-          font-family="Arial"
-          font-size="24"
-          font-weight="700"
+          fontFamily="Arial"
+          fontSize="24"
+          fontWeight="700"
           fill="#14213d"
-          text-anchor="middle"
-          dominant-baseline="middle"
+          textAnchor="middle"
+          dominantBaseline="middle"
         >
           Heroes
         </text>

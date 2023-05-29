@@ -16,7 +16,7 @@ export const ContainerButton = styled.div<ContainerButtonProps>`
   height: 40px;
   justify-content: center;
   margin: 12px 0 20px;
-  width: ${(props) => props.width};
+  min-width: ${(props) => props.width};
 
   & p {
     color: ${primary};
