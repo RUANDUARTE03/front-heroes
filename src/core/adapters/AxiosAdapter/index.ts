@@ -18,7 +18,7 @@ export class AxiosAdapter implements HttpClient {
     const getToken = localStorage.getItem("@zrp/token");
 
     let userId;
-    if (getToken) {
+    if (getToken?.length && getToken !== undefined) {
       const decoded: any = await jwt_decode(getToken);
 
       userId = decoded.id;

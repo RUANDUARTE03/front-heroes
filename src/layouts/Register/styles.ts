@@ -45,3 +45,9 @@ export const InputInformation = styled.input`
     padding-left: 8px;
   }
 `;
+
+export const ErroMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  font-weight: 400;
+`

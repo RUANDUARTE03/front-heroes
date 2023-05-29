@@ -6,11 +6,15 @@ import React, {
   useState,
 } from "react";
 
+type TypeMessageProps = "success" | "error" | "warning" | "";
+
 type ContextDefaultValuesProps = {
   token: string;
   setToken: (value: string) => void;
   messageAlert: string;
   setMessageAlert: (value: string) => void;
+  typeMessage: TypeMessageProps;
+  setTypeMessage: (value: TypeMessageProps) => void;
 };
 
 const contextDefaultValues: ContextDefaultValuesProps = {
@@ -18,6 +22,8 @@ const contextDefaultValues: ContextDefaultValuesProps = {
   setToken: () => null,
   messageAlert: "",
   setMessageAlert: () => null,
+  setTypeMessage: () => null,
+  typeMessage: "",
 };
 
 export const ApplicationContext =
@@ -26,6 +32,7 @@ export const ApplicationContext =
 export function ApplicationProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState("");
   const [messageAlert, setMessageAlert] = useState("");
+  const [typeMessage, setTypeMessage] = useState<TypeMessageProps>("");
 
   useEffect(() => {
     const getToken = localStorage.getItem("@zrp/token");
@@ -37,7 +44,8 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setTimeout(() => {
-      setMessageAlert('');
+      setMessageAlert("");
+      setTypeMessage("");
     }, 3000);
   }, [messageAlert]);
 
@@ -54,6 +62,8 @@ export function ApplicationProvider({ children }: { children: ReactNode }) {
         setToken: handleToken,
         messageAlert,
         setMessageAlert,
+        setTypeMessage,
+        typeMessage,
       }}
     >
       {children}

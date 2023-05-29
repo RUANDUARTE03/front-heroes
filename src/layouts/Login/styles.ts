@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const ContainerLogin = styled.div`
   align-items: center;
   display: flex;
+  flex-direction: column;
   height: calc(100vh - 100px - 42px);
   justify-content: center;
 `;
@@ -56,3 +57,23 @@ export const InformationRegister = styled.p`
     cursor: pointer;
   }
 `;
+
+export const ErroMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  font-weight: 400;
+`;
+
+export const SuccessMessage = styled.div`
+  background-color: green;
+  width: 400px;
+  margin: 20px 0;
+  padding: 12px;
+  border-radius: 4px;
+
+  & p {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+  }
+`

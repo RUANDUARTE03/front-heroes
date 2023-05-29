@@ -3,10 +3,12 @@ import * as S from "./styles";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components";
 import { useApplicationContext } from "../../context/application";
+import { isValidEmail } from "../../utils/emailValid";
+import { RegisterService } from "src/services/register";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { token } = useApplicationContext();
+  const { token, messageAlert, setMessageAlert, setTypeMessage } = useApplicationContext();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -19,6 +21,50 @@ const Register = () => {
       navigate("/home");
     }
   }, [navigate]);
+
+  const handleRegister = async () => {
+    const checkIfAllInformations =
+      !!firstName.length ||
+      !!lastName.length ||
+      !!email.length ||
+      !!password.length ||
+      !!passwordConfirmation.length;
+
+    if (!checkIfAllInformations) {
+      setMessageAlert("Preencha todas as informações");
+
+      return;
+    }
+
+    const checkEmail = isValidEmail(email);
+
+    if (!checkEmail) {
+      setMessageAlert("Email inválido");
+
+      return;
+    }
+
+    if (password !== passwordConfirmation) {
+      setMessageAlert("Confirmação de senha inválida");
+
+      return;
+    }
+
+    const { body } = await new RegisterService().create({
+      email,
+      firstName,
+      lastName,
+      password,
+    });
+
+    if (!body.error) {
+      navigate("/login");
+      setTypeMessage('success')
+      setMessageAlert('Sucesso ao criar usuário')
+    } else {
+      setMessageAlert("Erro ao tentar registrar-se");
+    }
+  };
 
   return (
     <S.ContainerRegister>
@@ -44,14 +90,17 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Senha"
+            type="password"
           />
           <S.InputInformation
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
             placeholder="Confirmação de senha"
+            type="password"
           />
         </S.BodyForm>
-        <Button onClick={() => null}>
+        <S.ErroMessage>{messageAlert}</S.ErroMessage>
+        <Button onClick={handleRegister}>
           <p>Registrar-se</p>
         </Button>
         <Button
