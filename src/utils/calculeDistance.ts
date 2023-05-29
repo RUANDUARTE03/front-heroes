@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export type LocationProps = {
-  id: string
+  id: string;
   lat: number;
   lng: number;
-}
+};
 
 const calculateDistance = (
   lat1: number,
@@ -31,7 +31,11 @@ const toRadians = (degrees: number): number => {
   return degrees * (Math.PI / 180);
 };
 
-const findNearestLocation = (locations: LocationProps[], targetLat: number, targetLng: number) => {
+const findNearestLocation = (
+  locations: LocationProps[],
+  targetLat: number,
+  targetLng: number
+) => {
   let minDistance = Infinity;
   let nearestLocation: LocationProps | null = null;
 

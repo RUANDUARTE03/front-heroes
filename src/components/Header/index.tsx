@@ -24,11 +24,6 @@ const Header = () => {
           Heroes
         </text>
       </svg>
-      {/** @todo - remove when not logged */}
-      <S.BodyInformations>
-        <p>Perfil</p>
-        <p>Login</p>
-      </S.BodyInformations>
     </S.ContainerHeader>
   );
 };

@@ -113,4 +113,18 @@ export class HeroesService {
 
     return response;
   }
+
+  async removeToBatle({ id }: { id: string }) {
+    const baseUrl = process.env.REACT_APP_HOST;
+    const httpClient: HttpClient = new AxiosAdapter();
+
+    const url = `${baseUrl}/heroe/removeTobatle/${id}`;
+
+    const response = await httpClient.request({
+      method: "post",
+      url,
+    });
+
+    return response;
+  }
 }

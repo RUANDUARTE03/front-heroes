@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, {
   createContext,
   ReactNode,
@@ -9,15 +11,18 @@ import React, {
 import { HeroesProps } from "src/models/HeroesProps";
 import { HeroesService } from "src/services/heroes";
 import { ThreatService } from "src/services/threat";
+import { generateRandomDate } from "src/utils/generateRandomDate";
+import { updateCounter } from "src/utils/updateCounter";
 
-type DangerLevelProps = "God" | "Dragon" | "Tiger" | "Wolf";
+export type DangerLevelProps = "God" | "Dragon" | "Tiger" | "Wolf";
 
-type MonsterProps = {
+export type MonsterProps = {
   name: string;
   url: string;
 };
 
 export type ThreatProps = {
+  _id?: string;
   dangerLevel: DangerLevelProps;
   monster: MonsterProps;
   name?: string;
@@ -25,6 +30,7 @@ export type ThreatProps = {
   heroe?: string;
   isCombat?: boolean;
   timeDuration?: Date;
+  exactDuration?: Date;
 };
 
 type ContextThreatsProps = {
@@ -34,6 +40,9 @@ type ContextThreatsProps = {
   currentThreat: ThreatProps | null;
   setCurrentThreat: (value: ThreatProps) => void;
   allThreat: ThreatProps[];
+  saveBatleThreast: () => void;
+  heroeSend: boolean;
+  setHeroeSend: (value: boolean) => void;
 };
 
 const contextDefaultValues: ContextThreatsProps = {
@@ -43,6 +52,9 @@ const contextDefaultValues: ContextThreatsProps = {
   currentThreat: null,
   setCurrentThreat: () => null,
   allThreat: [],
+  saveBatleThreast: () => null,
+  heroeSend: false,
+  setHeroeSend: () => null,
 };
 
 export const ThreatsApplication =
@@ -54,31 +66,57 @@ export function ThreatsProvider({ children }: { children: ReactNode }) {
   const [currentThreat, setCurrentThreat] = useState<ThreatProps | null>(null);
   const [allThreat, setAllThreat] = useState<ThreatProps[]>([]);
   const [refreshGetAll, setRefreshGetAll] = useState(false);
+  const [heroeSend, setHeroeSend] = useState(false);
 
-  // useEffect(() => {
-  //   if (currentThreat) {
-  //     const createThreat = async () => {
-  //       const { dangerLevel, monster } = currentThreat;
+  const saveBatleThreast = async () => {
+    if (currentThreat) {
+      const generateDate = generateRandomDate(currentThreat.dangerLevel);
 
-  //       await new ThreatService().createThreat({ dangerLevel, monster });
-  //       setRefreshGetAll(!refreshGetAll);
-  //     };
+      const getExactDate = updateCounter(generateDate) || "";
 
-  //     createThreat();
-  //   }
-  // }, [currentThreat]);
+      const parts = getExactDate.split(" ");
+
+      const hours = parseInt(parts[0].replace("h", ""));
+      const minutes = parseInt(parts[1].replace("m", ""));
+      const seconds = parseInt(parts[2].replace("s", ""));
+
+      const duration = new Date();
+      duration.setHours(hours);
+      duration.setMinutes(minutes);
+      duration.setSeconds(seconds);
+
+      const { body } = await new ThreatService().createThreat({
+        dangerLevel: currentThreat?.dangerLevel,
+        monster: currentThreat?.monster,
+        heroeId: closer?._id!,
+        timeDuration: generateDate,
+        exactDuration: duration,
+      });
+
+      if (!body.isError) {
+        setRefreshGetAll(!refreshGetAll);
+        setHeroeSend(true);
+      }
+    }
+  };
 
   useEffect(() => {
     const getAllThreats = async () => {
       const { body } = await new ThreatService().getAll();
 
-      const removeFirstItem = body.slice(1);
+      body?.map(async (item: any) => {
+        const elapsedTime = updateCounter(item?.timeDuration);
 
-      setAllThreat(removeFirstItem);
+        if (!elapsedTime) {
+          await new HeroesService().removeToBatle({ id: item.heroe });
+        }
+      });
+
+      setAllThreat(body);
     };
 
     getAllThreats();
-  }, [refreshGetAll]);
+  }, [currentThreat, refreshGetAll]);
 
   useEffect(() => {
     if (idCloser) {
@@ -86,8 +124,6 @@ export function ThreatsProvider({ children }: { children: ReactNode }) {
         const { body } = await new HeroesService().getHeroeById({
           id: idCloser,
         });
-
-        console.log(body);
 
         setCloser(body);
       };
@@ -105,6 +141,9 @@ export function ThreatsProvider({ children }: { children: ReactNode }) {
         currentThreat,
         setCurrentThreat,
         allThreat,
+        saveBatleThreast,
+        heroeSend,
+        setHeroeSend,
       }}
     >
       {children}

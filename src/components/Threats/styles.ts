@@ -5,7 +5,7 @@ export const ContainerThreat = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 40px 0;
   flex-direction: column;
 `;
 
@@ -50,7 +50,7 @@ export const CardThreat = styled.div`
     color: ${secondary};
   }
 
-  & p.ignoreMessage {
+  & p.alertMessage {
     font-size: 20px;
     font-weight: 700;
     color: ${primary} !important;
@@ -93,4 +93,15 @@ export const ContainerLastsThreats = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+`;
+
+export const HeroeCloser = styled.div`
+  background-color: ${primary};
+  padding: 12px;
+  border-radius: 4px;
+  margin: 10px 0 0;
+
+  & p {
+    color: ${light} !important;
+  }
 `;

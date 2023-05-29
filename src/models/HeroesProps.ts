@@ -5,4 +5,5 @@ export type HeroesProps = {
   classHeroe: string;
   latitude: string;
   longitude: string;
+  inBatle: boolean
 };
