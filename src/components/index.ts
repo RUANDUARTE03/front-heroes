@@ -1,4 +1,6 @@
+import { Button } from "./Button";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { Threats } from "./Threats";
 
-export { Header, Footer };
+export { Button, Header, Footer, Threats };
